@@ -10,7 +10,7 @@ function HomePage() {
       <div className="text-base md:text-2xl lg:text-4xl font-semibold text-slate-700">
         Welcome to your <br /> new task manager!
       </div>
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 flex-nowrap">
         {viewItems.map((view) => (
           <TaskView key={view.id} view={view} />
         ))}

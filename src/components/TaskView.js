@@ -22,7 +22,7 @@ function TaskView({ view }) {
           <div
             key={task.id}
             draggable
-            className="flex px-3 py-1.5 bg-white drop-shadow-sm rounded w-full cursor-pointer border border-gray-200"
+            className="flex px-3 hover:scale-x-105 hover:bg-gray-100 duration-300 py-1.5 bg-white drop-shadow-sm rounded w-full cursor-pointer border border-gray-200"
           >
             <div className="text-slate-700 font-semibold text-sm">
               {task.title}
