@@ -41,7 +41,7 @@ function TaskView({ view }) {
         )}
 
         <button
-          className="text-gray-400 text-left pl-2 text-sm mt-2 cursor-pointer"
+          className="text-gray-400 text-left pl-2 text-sm mt-2 cursor-pointer focus:outline-blue-400/80"
           onClick={handleNewTask}
         >
           + New
