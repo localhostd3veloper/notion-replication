@@ -1,6 +1,11 @@
-import React from "react";
+import { useState } from "react";
 
 function TaskView({ view }) {
+  const [isInputVisible, setIsInputVisible] = useState(false);
+  const handleNewTask = () => {
+    setIsInputVisible(true);
+  };
+
   return (
     <div className="flex flex-col items-center gap-4 w-48">
       <div className={`flex items-center justify-between w-full font-semibold`}>
@@ -16,12 +21,31 @@ function TaskView({ view }) {
         {view.tasks.map((task) => (
           <div
             key={task.id}
-            className="flex px-3 py-2 bg-white shadow rounded w-full"
+            draggable
+            className="flex px-3 py-1.5 bg-white drop-shadow-sm rounded w-full cursor-pointer border border-gray-200"
           >
-            <div className="text-slate-700 font-semibold">{task.title}</div>
+            <div className="text-slate-700 font-semibold text-sm">
+              {task.title}
+            </div>
           </div>
         ))}
-        <div className="text-gray-400 text-sm mt-2">+ New</div>
+        {isInputVisible && (
+          <div className="flex px-3 py-1.5 bg-white drop-shadow-sm rounded w-full cursor-pointer border border-gray-200">
+            <input
+              type="text"
+              className="w-full text-slate-700 placeholder:font-normal font-semibold text-sm outline-none"
+              placeholder="Type a name..."
+              autoFocus
+            />
+          </div>
+        )}
+
+        <button
+          className="text-gray-400 text-left pl-2 text-sm mt-2 cursor-pointer"
+          onClick={handleNewTask}
+        >
+          + New
+        </button>
       </div>
     </div>
   );
