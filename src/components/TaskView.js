@@ -7,12 +7,22 @@ function TaskView({ view }) {
   const [inputValue, setInputValue] = useState("");
   const task = useTask();
 
+  // * Adds a new task to the view
   const handleNewTask = () => {
     if (inputValue) {
       task.addTask(inputValue, view.id);
       setInputValue("");
     }
     document.getElementById("input").focus();
+  };
+
+  // * in case the user did not press enter and clicked outside the input field
+  // * this will add the task to the view
+  const handleBlur = () => {
+    if (!inputValue) {
+      setIsInputVisible(false);
+    }
+    handleNewTask();
   };
 
   return (
@@ -24,7 +34,12 @@ function TaskView({ view }) {
           </div>
           <div>{view.tasks.length}</div>
         </div>
-        <div className=" text-gray-400 cursor-pointer">+</div>
+        <button
+          onClick={() => setIsInputVisible(true)}
+          className=" text-gray-400 cursor-pointer"
+        >
+          +
+        </button>
       </div>
       <div className="flex flex-col w-full gap-1.5 flex-nowrap">
         {view.tasks.map((task) => (
@@ -55,9 +70,7 @@ function TaskView({ view }) {
                   handleNewTask();
                 }
               }}
-              onBlur={() => {
-                setIsInputVisible(false);
-              }}
+              onBlur={handleBlur}
             />
           </div>
         )}
