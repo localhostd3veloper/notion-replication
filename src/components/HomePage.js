@@ -1,9 +1,18 @@
-import React, { useContext } from "react";
-import { AppContext } from "../context/AppContext";
+import React from "react";
+import { useTask } from "../context/AppContext";
 import TaskView from "./TaskView";
 
 function HomePage() {
-  const { viewItems } = useContext(AppContext);
+  const task = useTask();
+
+  const [newViewName, setNewViewName] = React.useState("");
+  const [isNewViewInputOpen, setIsNewViewInputOpen] = React.useState(false);
+
+  const createNewView = () => {
+    task.addView(newViewName);
+    setNewViewName("");
+    setIsNewViewInputOpen(false);
+  };
 
   return (
     <div className="h-screen bg-gray-50 flex flex-col px-10 pt-5 gap-16">
@@ -11,9 +20,31 @@ function HomePage() {
         Welcome to your <br /> new task manager!
       </div>
       <div className="flex justify-center gap-4 flex-nowrap">
-        {viewItems.map((view) => (
+        {task.viewItems.map((view) => (
           <TaskView key={view.id} view={view} />
         ))}
+        <div>
+          {isNewViewInputOpen ? (
+            <input
+              type="text"
+              value={newViewName}
+              onChange={(e) => setNewViewName(e.target.value)}
+              className="text-slate-700 px-2 rounded-md bg-orange-300/20 focus:outline-none font-semibold text-sm"
+              onKeyDown={(e) =>
+                e.key === "Enter" && newViewName && createNewView()
+              }
+              autoFocus
+            />
+          ) : (
+            <button
+              className="font-semibold text-gray-400 cursor-pointer"
+              onClick={() => setIsNewViewInputOpen(true)}
+            >
+              + New View
+            </button>
+          )}
+          <div></div>
+        </div>
       </div>
     </div>
   );

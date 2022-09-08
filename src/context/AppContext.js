@@ -76,10 +76,20 @@ export const AppProvider = ({ children }) => {
     );
     setViewItems(newViewItems);
   };
+  const addView = (name) => {
+    const newView = {
+      name,
+      id: Math.floor(Math.random() * 10000),
+      color: "bg-orange-300/20",
+      tasks: [],
+    };
+    setViewItems([...viewItems, newView]);
+  };
 
   const value = {
     viewItems,
     addTask,
+    addView,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
