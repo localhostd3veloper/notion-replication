@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "Notion Clone App",
+  "short_name": "React Notion",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
