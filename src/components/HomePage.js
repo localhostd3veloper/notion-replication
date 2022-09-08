@@ -34,6 +34,7 @@ function HomePage() {
                 e.key === "Enter" && newViewName && createNewView()
               }
               autoFocus
+              onBlur={() => setIsNewViewInputOpen(false)}
             />
           ) : (
             <button
