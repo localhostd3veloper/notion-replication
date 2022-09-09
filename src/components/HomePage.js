@@ -15,9 +15,9 @@ function HomePage() {
   };
 
   return (
-    <div className="h-screen bg-gray-50 flex flex-col px-10 pt-5 gap-16">
-      <div className="text-base md:text-2xl lg:text-4xl font-semibold text-slate-700">
-        Welcome to your <br /> new task manager!
+    <div className="h-screen bg-gray-50 flex flex-col px-10 pt-10 gap-16">
+      <div className="text-base md:text-2xl lg:text-4xl font-semibold text-slate-600 first-letter:px-2 first-letter:mr-1 first-letter:shadow-md  first-letter:bg-white">
+        <span className="tracking-widest"> Notion:</span> One workspace. Every team.
       </div>
       <div className="flex justify-center gap-4 flex-nowrap">
         {task.viewItems.map((view) => (
