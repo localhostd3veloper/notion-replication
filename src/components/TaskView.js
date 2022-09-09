@@ -95,7 +95,6 @@ function TaskView({ view }) {
         currentView={view}
         isOpen={isDrawerOpen}
         setIsOpen={setIsDrawerOpen}
-        taskObject={task}
       />
     </div>
   );

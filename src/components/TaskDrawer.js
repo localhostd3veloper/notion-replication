@@ -1,6 +1,8 @@
 import React from "react";
+import { useTask } from "../context/AppContext";
 
-function TaskDrawer({ currentView, isOpen, setIsOpen, taskObject }) {
+function TaskDrawer({ currentView, isOpen, setIsOpen }) {
+  const taskObject = useTask();
   return (
     <>
       {isOpen && (
