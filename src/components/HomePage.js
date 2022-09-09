@@ -20,7 +20,7 @@ function HomePage() {
         <span className="tracking-widest"> Notion:</span> One workspace. Every
         team.
       </div>
-      <div className="flex justify-center gap-4 flex-nowrap">
+      <div className="flex gap-4 flex-nowrap overflow-x-scroll h-full px-5">
         {task.viewItems.map((view) => (
           <TaskView key={view.id} view={view} />
         ))}
@@ -39,7 +39,7 @@ function HomePage() {
             />
           ) : (
             <button
-              className="font-semibold text-gray-400 cursor-pointer"
+              className="font-semibold text-gray-400 cursor-pointer min-w-[200px]"
               onClick={() => setIsNewViewInputOpen(true)}
             >
               + New View

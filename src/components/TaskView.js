@@ -34,7 +34,7 @@ function TaskView({ view }) {
   };
 
   return (
-    <div id="" className="flex flex-col items-center gap-4 w-48">
+    <div className="flex flex-col items-center gap-4 min-w-[200px]">
       <div className={`flex items-center justify-between w-full font-semibold`}>
         <div className="flex gap-2  text-gray-400">
           <div className={`text-slate-700 px-2 rounded-md ${view.color}`}>
