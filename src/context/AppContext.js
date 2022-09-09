@@ -120,6 +120,7 @@ export const AppProvider = ({ children }) => {
       tasks: [],
     };
     setViewItems([...viewItems, newView]);
+    storeCache([...viewItems, newView]);
   };
 
   const deleteTask = (taskId, viewId) => {
