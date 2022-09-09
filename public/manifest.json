@@ -1,6 +1,8 @@
 {
   "name": "Notion Clone App",
   "short_name": "React Notion",
+  "description": "A Notion Clone App built with React by @localhostd3veloper",
+  "start_url": "/",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
