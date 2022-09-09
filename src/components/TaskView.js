@@ -55,7 +55,7 @@ function TaskView({ view }) {
             key={task.id}
             draggable
             onClick={() => toggleTaskDrawer(task.id)}
-            className="flex px-3 hover:scale-x-105 hover:bg-gray-100 duration-300 py-1.5 bg-white drop-shadow-sm rounded w-full cursor-pointer border border-gray-200"
+            className="flex px-3 hover:scale-105 hover:bg-gray-50 duration-300 py-1.5 bg-white drop-shadow-sm rounded w-full cursor-pointer border border-gray-200"
           >
             <div className="text-slate-700 font-semibold text-sm">
               {task.title}
@@ -85,7 +85,7 @@ function TaskView({ view }) {
         )}
 
         <button
-          className="text-gray-400 text-left pl-2 text-sm mt-2 cursor-pointer focus:outline-blue-400/80"
+          className="text-gray-400 text-left px-1 text-sm mt-2 cursor-pointer focus:outline-blue-400/80"
           onClick={() => setIsInputVisible(true)}
         >
           + New
