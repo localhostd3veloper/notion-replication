@@ -8,10 +8,74 @@ export function useTask() {
 
 export const AppProvider = ({ children }) => {
   const [viewItems, setViewItems] = useState([
-    { name: "Not started", id: 1, color: "bg-red-300/20", tasks: [] },
-    { name: "To Do", id: 2, color: "bg-blue-300/20", tasks: [] },
-    { name: "In progress", id: 3, color: "bg-yellow-300/20", tasks: [] },
-    { name: "Done", id: 4, color: "bg-green-300/20", tasks: [] },
+    {
+      name: "Not started",
+      id: 1,
+      color: "bg-red-300/20",
+      tasks: [
+        {
+          title: "Technical Interview AIRTRIBE",
+          id: 1,
+          description: "Interview with the technical team",
+        },
+        {
+          title: "Call with the CEO",
+          id: 2,
+          description: "Call with the CEO of the company",
+        },
+      ],
+    },
+    {
+      name: "To Do",
+      id: 2,
+      color: "bg-blue-300/20",
+      tasks: [
+        {
+          title: "Review This Assignment",
+          id: 2,
+          description: "Review this assignment and select the best candidate",
+        },
+      ],
+    },
+    {
+      name: "In progress",
+      id: 3,
+      color: "bg-yellow-300/20",
+      tasks: [
+        {
+          title: "Drag and Drop",
+          id: 3,
+          description: "Drag and Drop functionality",
+        },
+      ],
+    },
+    {
+      name: "Done",
+      id: 4,
+      color: "bg-green-300/20",
+      tasks: [
+        {
+          title: "Apply for the job",
+          id: 4,
+          description: "Apply for the job",
+        },
+        {
+          title: "Message the recruiter",
+          id: 5,
+          description: "Message the recruiter",
+        },
+        {
+          title: "Send the CV",
+          id: 6,
+          description: "Send the CV",
+        },
+        {
+          title: "Introductory call",
+          id: 7,
+          description: "Introductory call",
+        },
+      ],
+    },
   ]);
   const [taskId, setTaskId] = useState(null);
 
