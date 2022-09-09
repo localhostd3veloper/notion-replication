@@ -86,12 +86,40 @@ export const AppProvider = ({ children }) => {
     setViewItems([...viewItems, newView]);
   };
 
+  const deleteTask = (taskId, viewId) => {
+    const newViewItems = viewItems.map((view) =>
+      view.id === viewId
+        ? {
+            ...view,
+            tasks: view.tasks.filter((task) => task.id !== taskId),
+          }
+        : view
+    );
+    setViewItems(newViewItems);
+  };
+
+  const updateTask = (taskId, viewId, title, description) => {
+    const newViewItems = viewItems.map((view) =>
+      view.id === viewId
+        ? {
+            ...view,
+            tasks: view.tasks.map((task) =>
+              task.id === taskId ? { ...task, title, description } : { ...task }
+            ),
+          }
+        : view
+    );
+    setViewItems(newViewItems);
+  };
+
   const value = {
     viewItems,
     addTask,
     addView,
     setTaskId,
     taskId,
+    deleteTask,
+    updateTask,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
