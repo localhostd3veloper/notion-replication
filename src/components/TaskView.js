@@ -1,10 +1,13 @@
 import { useState } from "react";
 
 import { useTask } from "../context/AppContext";
+import TaskDrawer from "./TaskDrawer";
 
 function TaskView({ view }) {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const task = useTask();
 
   // * Adds a new task to the view
@@ -23,6 +26,11 @@ function TaskView({ view }) {
       setIsInputVisible(false);
     }
     handleNewTask();
+  };
+
+  const toggleTaskDrawer = (taskId) => {
+    setIsDrawerOpen(!isDrawerOpen);
+    task.setTaskId(taskId);
   };
 
   return (
@@ -46,6 +54,7 @@ function TaskView({ view }) {
           <div
             key={task.id}
             draggable
+            onClick={() => toggleTaskDrawer(task.id)}
             className="flex px-3 hover:scale-x-105 hover:bg-gray-100 duration-300 py-1.5 bg-white drop-shadow-sm rounded w-full cursor-pointer border border-gray-200"
           >
             <div className="text-slate-700 font-semibold text-sm">
@@ -82,6 +91,12 @@ function TaskView({ view }) {
           + New
         </button>
       </div>
+      <TaskDrawer
+        currentView={view}
+        isOpen={isDrawerOpen}
+        setIsOpen={setIsDrawerOpen}
+        taskObject={task}
+      />
     </div>
   );
 }

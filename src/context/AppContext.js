@@ -63,7 +63,7 @@ export const AppProvider = ({ children }) => {
       ],
     },
   ]);
-
+  const [taskId, setTaskId] = useState(null);
   const addTask = (title, viewId) => {
     const newTask = {
       id: Math.floor(Math.random() * 10000),
@@ -90,6 +90,8 @@ export const AppProvider = ({ children }) => {
     viewItems,
     addTask,
     addView,
+    setTaskId,
+    taskId,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
