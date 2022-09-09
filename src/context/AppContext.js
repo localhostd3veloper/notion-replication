@@ -16,12 +16,23 @@ export const AppProvider = ({ children }) => {
   const [taskId, setTaskId] = useState(null);
 
   useEffect(() => {
-    const tasks = JSON.parse(localStorage.getItem("tasks"));
-    if (tasks) {
-      setViewItems(tasks);
+    if (isCachePresent()) {
+      const cache = JSON.parse(localStorage.getItem("viewItems"));
+      setViewItems(cache);
     }
-    console.log({ viewItems });
-  }, [viewItems]);
+  }, []);
+
+  const isCachePresent = () => {
+    const data = localStorage.getItem("viewItems");
+    if (data) {
+      return true;
+    }
+    return false;
+  };
+
+  const storeCache = (data) => {
+    localStorage.setItem("viewItems", JSON.stringify(data));
+  };
 
   const addTask = (title, viewId) => {
     const newTask = {
@@ -34,6 +45,7 @@ export const AppProvider = ({ children }) => {
       view.id === viewId ? { ...view, tasks: [...view.tasks, newTask] } : view
     );
     setViewItems(newViewItems);
+    storeCache(newViewItems);
   };
 
   const addView = (name) => {
@@ -56,6 +68,7 @@ export const AppProvider = ({ children }) => {
         : view
     );
     setViewItems(newViewItems);
+    storeCache(newViewItems);
   };
 
   const updateTask = (taskId, viewId, title, description) => {
@@ -70,6 +83,7 @@ export const AppProvider = ({ children }) => {
         : view
     );
     setViewItems(newViewItems);
+    storeCache(newViewItems);
   };
 
   const changeView = (currentTask, fromViewId, toViewId) => {
@@ -96,7 +110,7 @@ export const AppProvider = ({ children }) => {
         : view
     );
     setViewItems(newViewItems2);
-
+    storeCache(newViewItems2);
     // deleteTask(currentTask.id, fromViewId);
   };
 
