@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 export const AppContext = createContext();
 
@@ -7,63 +7,22 @@ export function useTask() {
 }
 
 export const AppProvider = ({ children }) => {
-  // const [tasks] = useState([
-  //   {
-  //     id: 1,
-  //     title: "Task 1",
-  //     description: "Description 1",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Task 2",
-  //     description: "Description 2",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Task 3",
-  //     description: "Description 3",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Task 4",
-  //     description: "Description 4",
-  //   },
-  // ]);
-
   const [viewItems, setViewItems] = useState([
     { name: "Not started", id: 1, color: "bg-red-300/20", tasks: [] },
-    {
-      name: "To Do",
-      id: 2,
-      color: "bg-blue-300/20",
-      tasks: [
-        // {
-        //   id: 1,
-        //   title: "Task 1",
-        //   description: "Description 1",
-        // },
-        // {
-        //   id: 2,
-        //   title: "Task 2",
-        //   description: "Description 2",
-        // },
-      ],
-    },
+    { name: "To Do", id: 2, color: "bg-blue-300/20", tasks: [] },
     { name: "In progress", id: 3, color: "bg-yellow-300/20", tasks: [] },
-    {
-      name: "Done",
-      id: 4,
-      color: "bg-green-300/20",
-      tasks: [
-        // {
-        //   id: 5,
-        //   title: "Task 5",
-        //   description: "Description 5",
-        // },
-      ],
-    },
+    { name: "Done", id: 4, color: "bg-green-300/20", tasks: [] },
   ]);
   const [taskId, setTaskId] = useState(null);
+
+  useEffect(() => {
+    const tasks = JSON.parse(localStorage.getItem("tasks"));
+    if (tasks) {
+      setViewItems(tasks);
+    }
+    console.log({ viewItems });
+  }, [viewItems]);
+
   const addTask = (title, viewId) => {
     const newTask = {
       id: Math.floor(Math.random() * 10000),
@@ -76,6 +35,7 @@ export const AppProvider = ({ children }) => {
     );
     setViewItems(newViewItems);
   };
+
   const addView = (name) => {
     const newView = {
       name,
@@ -112,6 +72,34 @@ export const AppProvider = ({ children }) => {
     setViewItems(newViewItems);
   };
 
+  const changeView = (currentTask, fromViewId, toViewId) => {
+    console.log({ currentTask, fromViewId, toViewId });
+    const newTask = {
+      id: Math.floor(Math.random() * 10000),
+      title: currentTask.title,
+      description: currentTask.description,
+    };
+
+    const newViewItems = viewItems.map((view) =>
+      view.id === Number(toViewId)
+        ? { ...view, tasks: [...view.tasks, newTask] }
+        : view
+    );
+    setViewItems(newViewItems);
+    // remove task from previous view
+    const newViewItems2 = newViewItems.map((view) =>
+      view.id === Number(fromViewId)
+        ? {
+            ...view,
+            tasks: view.tasks.filter((task) => task.id !== currentTask.id),
+          }
+        : view
+    );
+    setViewItems(newViewItems2);
+
+    // deleteTask(currentTask.id, fromViewId);
+  };
+
   const value = {
     viewItems,
     addTask,
@@ -120,6 +108,7 @@ export const AppProvider = ({ children }) => {
     taskId,
     deleteTask,
     updateTask,
+    changeView,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
