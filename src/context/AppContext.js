@@ -14,7 +14,7 @@ export const AppProvider = ({ children }) => {
       color: "bg-red-300/20",
       tasks: [
         {
-          title: "Technical Interview AIRTRIBE",
+          title: "Technical Interview",
           id: 1,
           description: "Interview with the technical team",
         },
