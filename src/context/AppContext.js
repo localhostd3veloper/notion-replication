@@ -152,7 +152,7 @@ export const AppProvider = ({ children }) => {
   };
 
   const changeView = (currentTask, fromViewId, toViewId) => {
-    console.log({ currentTask, fromViewId, toViewId });
+    // console.log({ currentTask, fromViewId, toViewId });
     const newTask = {
       id: Math.floor(Math.random() * 10000),
       title: currentTask.title,

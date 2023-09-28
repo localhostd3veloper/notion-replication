@@ -7,6 +7,7 @@ function TaskView({ view, viewId }) {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const { changeView, setTaskId, addTask } = useTask();
 
@@ -34,6 +35,7 @@ function TaskView({ view, viewId }) {
   };
 
   const handleDrag = (event, task, fromViewId) => {
+    setIsDragging(true);
     event.dataTransfer.setData("TASK-ID", JSON.stringify({ task, fromViewId }));
   };
 
@@ -43,7 +45,14 @@ function TaskView({ view, viewId }) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 min-w-[200px]">
+    <div
+      className="flex flex-col items-center gap-4 min-w-[200px]"
+      onDrop={handleOnDrop}
+      onDragOver={(e) => {
+        e.preventDefault();
+        setIsDragging(false);
+      }}
+    >
       <div className={`flex items-center justify-between w-full font-semibold`}>
         <div className="flex gap-2  text-gray-400">
           <div className={`text-slate-700 px-2 rounded-md ${view.color}`}>
@@ -58,11 +67,7 @@ function TaskView({ view, viewId }) {
           +
         </button>
       </div>
-      <div
-        className="flex flex-col w-full gap-1.5 flex-nowrap"
-        onDrop={handleOnDrop}
-        onDragOver={(e) => e.preventDefault()}
-      >
+      <div className="flex flex-col w-full gap-1.5 flex-nowrap">
         {view.tasks.map((task) => (
           <div
             key={task.id}
@@ -82,7 +87,7 @@ function TaskView({ view, viewId }) {
               id="input"
               type="text"
               className="w-full text-slate-700 placeholder:font-normal font-semibold text-sm outline-none"
-              placeholder="Type a name..."
+              placeholder="Add Task Title..."
               autoFocus
               value={inputValue}
               onChange={(e) => {
@@ -102,7 +107,7 @@ function TaskView({ view, viewId }) {
           className="text-gray-400 text-left px-1 text-sm mt-2 cursor-pointer focus:outline-blue-400/80"
           onClick={() => setIsInputVisible(true)}
         >
-          + New
+          + New Task
         </button>
       </div>
       <TaskDrawer
