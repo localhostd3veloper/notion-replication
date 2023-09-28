@@ -8,7 +8,7 @@ function TaskView({ view, viewId }) {
   const [inputValue, setInputValue] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const { task, changeView, setTaskId,addTask } = useTask();
+  const { changeView, setTaskId, addTask } = useTask();
 
   // * Adds a new task to the view
   const handleNewTask = () => {
@@ -41,7 +41,7 @@ function TaskView({ view, viewId }) {
     const { task, fromViewId } = JSON.parse(e.dataTransfer.getData("TASK-ID"));
     changeView(task, fromViewId, viewId);
   };
-  
+
   return (
     <div className="flex flex-col items-center gap-4 min-w-[200px]">
       <div className={`flex items-center justify-between w-full font-semibold`}>
