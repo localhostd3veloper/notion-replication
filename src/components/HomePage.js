@@ -22,7 +22,7 @@ function HomePage() {
       </div>
       <div className="flex gap-4 flex-nowrap overflow-x-scroll h-full px-5">
         {task.viewItems.map((view) => (
-          <TaskView key={view.id} view={view} />
+          <TaskView key={view.id} view={view} viewId={view.id} />
         ))}
         <div>
           {isNewViewInputOpen ? (

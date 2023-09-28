@@ -3,17 +3,17 @@ import { useState } from "react";
 import { useTask } from "../context/AppContext";
 import TaskDrawer from "./TaskDrawer";
 
-function TaskView({ view }) {
+function TaskView({ view, viewId }) {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const task = useTask();
+  const { task, changeView, setTaskId,addTask } = useTask();
 
   // * Adds a new task to the view
   const handleNewTask = () => {
     if (inputValue) {
-      task.addTask(inputValue, view.id);
+      addTask(inputValue, view.id);
       setInputValue("");
     }
     document.getElementById("input").focus();
@@ -30,9 +30,18 @@ function TaskView({ view }) {
 
   const toggleTaskDrawer = (taskId) => {
     setIsDrawerOpen(!isDrawerOpen);
-    task.setTaskId(taskId);
+    setTaskId(taskId);
   };
 
+  const handleDrag = (event, task, fromViewId) => {
+    event.dataTransfer.setData("TASK-ID", JSON.stringify({ task, fromViewId }));
+  };
+
+  const handleOnDrop = (e) => {
+    const { task, fromViewId } = JSON.parse(e.dataTransfer.getData("TASK-ID"));
+    changeView(task, fromViewId, viewId);
+  };
+  
   return (
     <div className="flex flex-col items-center gap-4 min-w-[200px]">
       <div className={`flex items-center justify-between w-full font-semibold`}>
@@ -49,11 +58,16 @@ function TaskView({ view }) {
           +
         </button>
       </div>
-      <div className="flex flex-col w-full gap-1.5 flex-nowrap">
+      <div
+        className="flex flex-col w-full gap-1.5 flex-nowrap"
+        onDrop={handleOnDrop}
+        onDragOver={(e) => e.preventDefault()}
+      >
         {view.tasks.map((task) => (
           <div
             key={task.id}
             draggable
+            onDragStart={(e) => handleDrag(e, task, viewId)}
             onClick={() => toggleTaskDrawer(task.id)}
             className="flex px-3 hover:scale-105 hover:bg-gray-50 duration-300 py-1.5 bg-white drop-shadow-sm rounded w-full cursor-pointer border border-gray-200"
           >
