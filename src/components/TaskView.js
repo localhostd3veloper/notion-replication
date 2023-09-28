@@ -7,8 +7,6 @@ function TaskView({ view, viewId }) {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-
   const { changeView, setTaskId, addTask } = useTask();
 
   // * Adds a new task to the view
@@ -30,12 +28,10 @@ function TaskView({ view, viewId }) {
   };
 
   const toggleTaskDrawer = (taskId) => {
-    setIsDrawerOpen(!isDrawerOpen);
     setTaskId(taskId);
   };
 
   const handleDrag = (event, task, fromViewId) => {
-    setIsDragging(true);
     event.dataTransfer.setData("TASK-ID", JSON.stringify({ task, fromViewId }));
   };
 
@@ -48,10 +44,7 @@ function TaskView({ view, viewId }) {
     <div
       className="flex flex-col items-center gap-4 min-w-[200px]"
       onDrop={handleOnDrop}
-      onDragOver={(e) => {
-        e.preventDefault();
-        setIsDragging(false);
-      }}
+      onDragOver={(e) => e.preventDefault()}
     >
       <div className={`flex items-center justify-between w-full font-semibold`}>
         <div className="flex gap-2  text-gray-400">
