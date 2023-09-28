@@ -2,39 +2,33 @@ import { useEffect, useState } from "react";
 import { useTask } from "../context/AppContext";
 
 function TaskDrawer({ currentView, isOpen, setIsOpen }) {
-  const taskObject = useTask();
+  const { taskId, updateTask, setTaskId, viewItems, deleteTask, changeView } =
+    useTask();
 
-  const currentTask = currentView.tasks.find(
-    (task) => task.id === taskObject.taskId
-  );
+  const currentTask = currentView.tasks.find((task) => task.id === taskId);
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const handleBlur = () => {
     if (title) {
-      taskObject.updateTask(
-        taskObject.taskId,
-        currentView.id,
-        title,
-        description
-      );
+      updateTask(taskId, currentView.id, title, description);
     }
   };
 
   const handleClose = () => {
     handleBlur();
     setIsOpen(false);
-    taskObject.setTaskId(null);
+    setTaskId(null);
   };
 
   const handleDelete = () => {
-    taskObject.deleteTask(taskObject.taskId, currentView.id);
+    deleteTask(taskId, currentView.id);
     setIsOpen(false);
   };
 
   const handleViewChange = async (viewId) => {
-    await taskObject.changeView(currentTask, currentView.id, Number(viewId));
+    await changeView(currentTask, currentView.id, Number(viewId));
     setIsOpen(false);
   };
 
@@ -54,7 +48,7 @@ function TaskDrawer({ currentView, isOpen, setIsOpen }) {
   return (
     <>
       {isOpen && (
-        <div className="flex flex-row-reverse w-full z-10 ease-linear transition-all bg-black/30 absolute inset-0 before:opacity-75 after:opacity-100 duration-700">
+        <div className="flex flex-row-reverse w-full z-10 ease-in-out transition-all bg-black/30 absolute inset-0 before:opacity-75 after:opacity-100 duration-700">
           <div
             className={`
             ${isFullScreen} ? "w-1/2" : "w-0"
@@ -92,7 +86,7 @@ function TaskDrawer({ currentView, isOpen, setIsOpen }) {
                   className={`${currentView.color} ml-4 w-1/2 outline-none rounded`}
                   // onBlur={handleViewChange}
                 >
-                  {taskObject.viewItems.map((view) => (
+                  {viewItems.map((view) => (
                     <option
                       key={view.id}
                       value={view.id}

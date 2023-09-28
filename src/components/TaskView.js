@@ -28,6 +28,7 @@ function TaskView({ view, viewId }) {
   };
 
   const toggleTaskDrawer = (taskId) => {
+    setIsDrawerOpen(true);
     setTaskId(taskId);
   };
 
